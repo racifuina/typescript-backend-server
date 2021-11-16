@@ -5,4 +5,5 @@ export const sequelize = new Sequelize(`${process.env.DB_DATABASE}`, `${process.
     port: Number(process.env.DB_PORT),
     dialect: 'postgres',
     logging: false,
+    timezone: 'America/Guatemala',
 });

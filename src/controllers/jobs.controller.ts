@@ -7,58 +7,26 @@ const jobsService = new JobsService();
 @JsonController('/jobs', { transformResponse: false })
 export default class JobsController {
     @Get('')
-    async getAll() {
-        return {
-            status: 200,
-            data: await jobsService.getAll(),
-        }
+    getAll() {
+        return jobsService.getAll();
     }
 
     @Post('')
-    async post(@Body() body: JobAttributes) {
-        const job = await jobsService.create(body);
-        return {
-            status: 200,
-            data: job
-        }
+    post(@Body() body: JobAttributes) {
+        return jobsService.insert(body);
     }
 
-    @Get('/:jobId')
-    async getByJobId(@Param('jobId') jobId: number) {
-        const job = await jobsService.getById(jobId);
-        if (!job) {
-            return {
-                status: 404
-            }
-        }
-        return {
-            status: 200,
-            data: job
-        }
+    @Get('/:jobId') getByJobId(@Param('jobId') jobId: number) {
+        return jobsService.getById(jobId);
     }
 
     @Put('/:jobId')
-    async updateByJobId(@Param('jobId') jobId: number, @Body() body: JobAttributes) {
-        await jobsService.updateById(jobId, body);
-        
-        return {
-            status: 200
-        }
+    updateByJobId(@Param('jobId') jobId: number, @Body() body: JobAttributes) {
+        return jobsService.updateById(jobId, body);
     }
 
     @Delete('/:jobId')
-    async deleteByJobId(@Param('jobId') jobId: number) {
-        const job = await jobsService.getById(jobId);
-        if (!job) {
-            return {
-                status: 404
-            }
-        }
-        
-        await job.destroy();
-
-        return {
-            status: 200
-        }
+    deleteByJobId(@Param('jobId') jobId: number) {
+        return jobsService.destroyById(jobId);
     }
 }

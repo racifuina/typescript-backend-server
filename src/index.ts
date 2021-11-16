@@ -12,6 +12,10 @@ const routingControllersOptions: RoutingControllersOptions = {
     classTransformer: true,
     cors: true,
     defaultErrorHandler: true,
+    defaults: {
+        nullResultCode: 404,
+        undefinedResultCode: 204
+    }
 }
 const app = createExpressServer(routingControllersOptions);
 
